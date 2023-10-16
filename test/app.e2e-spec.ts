@@ -5,6 +5,7 @@ import { AppModule } from '../src/app.module';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { PrismaService } from '../src/prisma/prisma.service';
 import { AuthDto } from '../src/auth/dto';
+import { EditUserDto } from 'src/user/dto';
 
 describe('App e2e', () => {
   let app: INestApplication;
@@ -113,14 +114,34 @@ describe('App e2e', () => {
           .expectStatus(200);
       });
     });
-    describe('Edit user', () => {});
+    describe('Edit user', () => {
+      it('should edit user', () => {
+        const dto: EditUserDto = {
+          firstName: 'Vedran',
+          email: 'marko@mail.com',
+        };
+        return pactum
+          .spec()
+          .patch('/users')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .withBody(dto)
+          .expectStatus(200)
+          .inspect();
+      });
+    });
   });
 
   describe('Bookmarks', () => {
     describe('Create bookmark', () => {});
+
     describe('Get bookmark by Id', () => {});
+
     describe('Get bookmarks', () => {});
+
     describe('Edit bookmark', () => {});
+
     describe('Delete bookmark', () => {});
   });
 });
