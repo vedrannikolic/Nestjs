@@ -117,8 +117,8 @@ describe('App e2e', () => {
     describe('Edit user', () => {
       it('should edit user', () => {
         const dto: EditUserDto = {
-          firstName: 'Vedran',
-          email: 'marko@mail.com',
+          firstName: 'Vladimir',
+          email: 'vedran@mail.com',
         };
         return pactum
           .spec()
@@ -128,7 +128,8 @@ describe('App e2e', () => {
           })
           .withBody(dto)
           .expectStatus(200)
-          .inspect();
+          .expectBodyContains(dto.firstName)
+          .expectBodyContains(dto.email);
       });
     });
   });
