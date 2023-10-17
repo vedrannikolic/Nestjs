@@ -117,7 +117,7 @@ describe('App e2e', () => {
     describe('Edit user', () => {
       it('should edit user', () => {
         const dto: EditUserDto = {
-          firstName: 'Vladimir',
+          firstName: 'Vedran',
           email: 'vedran@mail.com',
         };
         return pactum
@@ -135,11 +135,23 @@ describe('App e2e', () => {
   });
 
   describe('Bookmarks', () => {
-    describe('Create bookmark', () => {});
+    describe('Get empty bookmarks', () => {
+      it('should get bookmarks', () => {
+        return pactum
+          .spec()
+          .get('/bookmarks')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(200)
+          .expectBody([])
+          .inspect();
+      });
+    });
 
     describe('Get bookmark by Id', () => {});
 
-    describe('Get bookmarks', () => {});
+    describe('Create bookmark', () => {});
 
     describe('Edit bookmark', () => {});
 
